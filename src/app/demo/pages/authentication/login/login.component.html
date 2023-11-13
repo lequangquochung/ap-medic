@@ -1,0 +1,26 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="card my-5">
+        <div class="card-body">
+          <form role="form" [formGroup]="signInForm" (ngSubmit)="login()">
+            <p class="mb-4 d-flex justify-content-center login-title "> Login</p>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control"placeholder="Email" formControlName="email" />
+              <label for="floatingInput">Email address / Username</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" placeholder="Password" formControlName="password"/>
+              <label for="password">Password</label>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-secondary">Sign In</button>
+            </div>
+          </form>
+          <hr />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

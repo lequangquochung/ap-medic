@@ -1,0 +1,26 @@
+<div class="block-create-employee">
+  <form class="form-group" [formGroup]="createForm" (ngSubmit)="createEmployee()">
+      <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
+          <input type="text" class="form-control" placeholder="Họ và tên" formControlName="fullName">
+      </div>
+
+      <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Mô tả</label>
+          <input type="text" class="form-control" placeholder="Mô tả" formControlName="description">
+      </div>
+
+      <div class="mb-3">
+          <label for="formFile" class="form-label">Chức Vụ</label>
+          <input type="text" class="form-control" placeholder="Chức Vụ" formControlName="degree">
+      </div>
+
+      <div class="mb-3">
+          <label for="formFile" class="form-label">Ảnh đại diện</label>
+          <input class="form-control" type="file" id="formFile" formControlName="avatar" (change)="handleUpload($event)">
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary"> Tạo Mới</button>
+      </div>
+  </form>
+</div>
