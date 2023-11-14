@@ -22,6 +22,18 @@ export class AdminServiceService {
     return localStorage.getItem(EStorageKey.AccessToken) ? (localStorage.getItem(EStorageKey.AccessToken) as string | null) : null;
   }
 
+  public isLoggedIn(): boolean {
+    return this.currentUser !== null;
+  }
+
+
+  public get currentUser(): any | null {
+    return localStorage.getItem(EStorageKey.CurrentUser)
+      ? (JSON.parse(localStorage.getItem(EStorageKey.CurrentUser)!))
+      : null;
+  }
+
+
   public signIn(payload: ILoginRequest): Observable<IResponseData<any>> {
     return this.httpClient.post<any>(this.baseUrl + 'cms/auth/login', payload).pipe(
       map((result: IResponseData<any>) => {

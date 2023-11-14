@@ -4,6 +4,8 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import LoginComponent from './demo/pages/authentication/login/login.component';
 import { ListEmployeeComponent } from './demo/elements/employee/list-employee/list-employee.component';
+import { AuthGuard } from './guard/auth.guard';
+import { EditEmployeeComponent } from './demo/elements/employee/edit-employee/edit-employee.component';
 
 const routes: Routes = [
   {
@@ -12,8 +14,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
-        pathMatch: 'full'
+        redirectTo: '/employee',
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',
@@ -33,32 +35,18 @@ const routes: Routes = [
       },
       {
         path: 'employee',
-        loadChildren: () => import('./demo/elements/employee/employee.module').then((m)=>m.EmployeeModule)
+        loadChildren: () => import('./demo/elements/employee/employee.module').then((m)=>m.EmployeeModule),
       },
-      
-      // {
-      //   path: 'login',
-      //   loadComponent: () => import('./demo/pages/authentication/login/login.component')
-      // }
-    ]
+    ],
   },
-  { path: 'login', component: LoginComponent },
-  // {
-  //   path: '',
-  //   component: GuestComponent,
-  //   children: [
-  //     {
-  //       path: 'guest',
-        // loadChildren: () => import('./demo/pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
-  //       // loadChildren: () => import('./demo/pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
-  //     }
-  //   ]
-  // }
-  
+  { 
+    path: 'login', 
+    component: LoginComponent , 
+  },
   {
     path:'**',
     pathMatch: 'full',
-    redirectTo: 'dashboard'
+    redirectTo: '/employee/list-employee'
   }
 ];
 

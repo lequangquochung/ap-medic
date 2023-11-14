@@ -5,13 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 import EmployeeComponent from './employee.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 
 
 const routes: Routes = [
   {
     path: '',
     children: [
-        {
+      {
         path: 'list-employee',
         component: ListEmployeeComponent
       },
@@ -19,13 +20,18 @@ const routes: Routes = [
         path: 'create-employee',
         component: CreateEmployeeComponent
       },
+      {
+        path: ':employeeId/edit',
+        component: EditEmployeeComponent
+    }
     ],
   },
+  
 ];
 
 
 @NgModule({
-  declarations: [ListEmployeeComponent, EmployeeComponent, CreateEmployeeComponent],
+  declarations: [ListEmployeeComponent, EmployeeComponent, CreateEmployeeComponent, EditEmployeeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

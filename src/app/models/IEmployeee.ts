@@ -1,6 +1,7 @@
 export interface IEmployeeCreate {
-  avatar: string;
+  id: string;
+  avatar?: string;
   fullName: string;
-  description: string;
-  degree: string;
+  description?: string;
+  degree?: string;
 }
