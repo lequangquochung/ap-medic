@@ -31,7 +31,12 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [ListEmployeeComponent, EmployeeComponent, CreateEmployeeComponent, EditEmployeeComponent],
+  declarations: [
+    ListEmployeeComponent, 
+    EmployeeComponent, 
+    CreateEmployeeComponent, 
+    EditEmployeeComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
