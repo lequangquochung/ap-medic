@@ -1,6 +1,12 @@
-.block-create-employee{
+.block-create-employee {
   width: 50%;
   border: 1px solid #d1d1d1;
   border-radius: .5rem;
   padding: 1rem;
+}
+
+.avatar-employee {
+  width: 170px;
+  height: 120px;
+  object-fit: contain;
 }

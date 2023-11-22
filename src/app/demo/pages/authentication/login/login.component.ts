@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { AdminServiceService } from 'src/app/services/admin/admin-service.service';
+import { Router } from '@angular/router';
+import { AdminService } from 'src/app/services/admin/admin-service';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +17,14 @@ export default class LoginComponent implements OnInit {
 
   constructor(private router: Router,
     private fb: FormBuilder,
-    private adminServiceService: AdminServiceService
+    private adminService: AdminService
    ) {
 
   }
 
   ngOnInit(): void {
-    if (this.adminServiceService.accessToken && this.adminServiceService.accessToken !== 'undefined') {
-      this.router.navigate(['/']);
+    if (this.adminService.accessToken && this.adminService.accessToken !== 'undefined') {
+      this.router.navigate(['/app']);
     }
   }
 
@@ -39,11 +38,10 @@ export default class LoginComponent implements OnInit {
         password: password || '',
       }
 
-      this.adminServiceService.signIn(payload).subscribe({
+      this.adminService.signIn(payload).subscribe({
         next: (res) => {
           if(res.success)
-            console.log(res);
-            this.router.navigate(['/']);
+            this.router.navigate(['/app']);
           },
         error:(e: Error) => {
           this.errors = 'Username or password incorrect. Please try again!';

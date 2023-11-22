@@ -82,7 +82,7 @@ const NavigationItems = [
             id: 'listEmployee',
             title: 'List Employee',
             type: 'item',
-            url: '/employee/list-employee',
+            url: '/app/employee/list-employee',
             target: false,
             breadcrumbs: false
           },
@@ -90,7 +90,7 @@ const NavigationItems = [
             id: 'createEmployee',
             title: 'Create Employee',
             type: 'item',
-            url: '/employee/create-employee',
+            url: '/app/employee/create-employee',
             target: false,
             breadcrumbs: false
           },

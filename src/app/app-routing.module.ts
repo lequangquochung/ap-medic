@@ -1,25 +1,27 @@
-import { NgModule, Component } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule, Component, Inject } from '@angular/core';
+import { CanActivateFn, RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import LoginComponent from './demo/pages/authentication/login/login.component';
 import { ListEmployeeComponent } from './demo/elements/employee/list-employee/list-employee.component';
 import { AuthGuard } from './guard/auth.guard';
 import { EditEmployeeComponent } from './demo/elements/employee/edit-employee/edit-employee.component';
+import { AdminService } from './services/admin/admin-service';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'app',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
-        redirectTo: '/employee',
+        redirectTo: 'employee',
         pathMatch: 'full',
       },
       {
         path: 'dashboard',
-        loadComponent: () => import('./demo/default/default.component')
+        loadComponent: () => import('./demo/default/default.component'),
       },
       {
         path: 'typography',
@@ -46,7 +48,7 @@ const routes: Routes = [
   {
     path:'**',
     pathMatch: 'full',
-    redirectTo: '/employee/list-employee'
+    redirectTo: 'login'
   }
 ];
 

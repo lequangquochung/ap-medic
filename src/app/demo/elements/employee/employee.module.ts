@@ -13,6 +13,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: '',
+        redirectTo: 'list-employee',
+        pathMatch: 'full',
+      },
+      {
         path: 'list-employee',
         component: ListEmployeeComponent
       },

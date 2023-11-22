@@ -10,10 +10,10 @@ import { ILoginRequest } from 'src/app/models/ILoginRequest';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminServiceService {
+export class AdminService {
   private baseUrl = `${environment.apiUrl}`
-  
-  private currentUserChanged = new Subject<any>();
+
+  public currentUserChanged = new Subject<any>();
 
   constructor(private httpClient: HttpClient,
     private router: Router) { }
@@ -28,8 +28,8 @@ export class AdminServiceService {
 
 
   public get currentUser(): any | null {
-    return localStorage.getItem(EStorageKey.CurrentUser)
-      ? (JSON.parse(localStorage.getItem(EStorageKey.CurrentUser)!))
+    return localStorage.getItem(EStorageKey.AccessToken)
+      ? localStorage.getItem(EStorageKey.AccessToken)
       : null;
   }
 

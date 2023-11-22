@@ -1,7 +1,7 @@
 // Angular import
 import { Component } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { AdminServiceService } from 'src/app/services/admin/admin-service.service';
+import { Router } from '@angular/router';
+import { AdminService } from 'src/app/services/admin/admin-service';
 
 @Component({
   selector: 'app-nav-right',
@@ -12,9 +12,9 @@ export class NavRightComponent {
 
   constructor(
     private router: Router,
-    private adminServiceService: AdminServiceService){}
+    private adminService: AdminService){}
 
   public logout() {
-    this.adminServiceService.logout();
+    this.adminService.logout();
   }
 }

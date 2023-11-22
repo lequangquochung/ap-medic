@@ -15,9 +15,6 @@ export class NavContentComponent implements OnInit {
   // public props
   @Output() NavCollapsedMob: EventEmitter<any> = new EventEmitter();
 
-  // version
-  currentApplicationVersion = environment.appVersion;
-
   navigation: any;
   windowWidth = window.innerWidth;
 
