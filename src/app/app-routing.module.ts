@@ -23,10 +23,10 @@ const routes: Routes = [
         path: 'dashboard',
         loadComponent: () => import('./demo/default/default.component'),
       },
-      {
-        path: 'typography',
-        loadComponent: () => import('./demo/elements/typography/typography.component')
-      },
+      // {
+      //   path: 'typography',
+      //   loadComponent: () => import('./demo/elements/typography/typography.component')
+      // },
       {
         path: 'color',
         loadComponent: () => import('./demo/elements/element-color/element-color.component')
@@ -39,6 +39,10 @@ const routes: Routes = [
         path: 'employee',
         loadChildren: () => import('./demo/elements/employee/employee.module').then((m)=>m.EmployeeModule),
       },
+      {
+        path:'news',
+        loadChildren: () => import('./demo/elements/technews/tech-news.module').then((m) => m.TechNewsModule)
+      }
     ],
   },
   { 

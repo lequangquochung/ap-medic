@@ -97,12 +97,36 @@ const NavigationItems = [
         ]
       },
       {
-        id: 'typography',
-        title: 'Typography',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/typography',
-        icon: 'ti ti-typography'
+        id: 'news',
+        title: 'News',
+        type: 'collapse',
+        icon: 'ti ti-key',
+        children: [
+          {
+            id: 'listNews',
+            title: 'News',
+            type: 'item',
+            url: '/app/news/list-news',
+            target: false,
+            breadcrumbs: false
+          },
+          {
+            id: 'createNews',
+            title: 'Create News',
+            type: 'item',
+            url: '/app/news/create-news',
+            target: false,
+            breadcrumbs: false
+          },
+          // {
+          //   id: 'createEmployee',
+          //   title: 'Create Employee',
+          //   type: 'item',
+          //   url: '/app/employee/create-employee',
+          //   target: false,
+          //   breadcrumbs: false
+          // },
+        ]
       },
       {
         id: 'color',

@@ -58,5 +58,11 @@ export class CreateEmployeeComponent implements OnInit {
     }
   }
 
+  protected getDefaultAvatar(e: Event) {
+    const imgElement = e.target as HTMLImageElement;
+    imgElement.src = 'assets/images/user/default-avatar.png';
+  }
+  
+
 
 }

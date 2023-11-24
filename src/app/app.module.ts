@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -21,8 +21,7 @@ import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthenticationModule } from './demo/pages/authentication/authentication.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ListEmployeeComponent } from './demo/elements/employee/list-employee/list-employee.component';
-import { EmployeeModule } from './demo/elements/employee/employee.module';
+
 
 @NgModule({
   declarations: [
@@ -47,8 +46,9 @@ import { EmployeeModule } from './demo/elements/employee/employee.module';
     HttpClientModule,
     SharedModule, 
     BrowserAnimationsModule,
-    AuthenticationModule,],
+    AuthenticationModule,
+  ],
   providers: [NavigationItem],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
