@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 const routes: Routes = [
   {
@@ -46,7 +48,9 @@ const routes: Routes = [
     HttpClientModule,
     AngularEditorModule,
     TableModule,
-    InputTextModule
+    InputTextModule,
+    ToastModule,
+    ConfirmPopupModule 
   ],
   exports: [RouterModule],
  

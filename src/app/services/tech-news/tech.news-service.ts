@@ -13,7 +13,7 @@ export class TechNewsService {
   accessToken: string;
   constructor(private httpClient: HttpClient,
     private adminService: AdminService) {
-    this.accessToken  = this.adminService.accessToken
+    this.accessToken = this.adminService.accessToken
   }
   private baseUrl = `${environment.apiUrl}`
 
@@ -22,16 +22,48 @@ export class TechNewsService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.accessToken}`
     });
-    return this.httpClient.post<any>(this.baseUrl + 'cms/topic', payload, {headers: headers})
+    return this.httpClient.post<any>(this.baseUrl + 'cms/topic', payload, { headers: headers })
   }
 
   getListNews(): Observable<any> {
     const options = createRequestOptions({
-      params: { take: '', skip:'' },
-      headers: { 'Authorization': `Bearer ${this.accessToken}`,
-      'ngrok-skip-browser-warning': 'true' },
+      params: { take: '', skip: '' },
+      headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
+        'ngrok-skip-browser-warning': 'true'
+      },
     });
-
     return this.httpClient.get<any>(this.baseUrl + `cms/topic`, options);
+  }
+
+  edit(id: string, payload): Observable<any> {
+    const options = createRequestOptions({
+      headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
+        'ngrok-skip-browser-warning': 'true'
+      },
+
+    });
+    return this.httpClient.put<any>(this.baseUrl + `cms/topic/${id}`, payload, options);
+  }
+
+  getNewsById(id: string): Observable<any> {
+    const options = createRequestOptions({
+      headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
+        'ngrok-skip-browser-warning': 'true'
+      },
+    });
+    return this.httpClient.get<any>(this.baseUrl + `cms/topic/${id}`, options);
+  }
+
+  delete(id: string): Observable<any> {
+    const options = createRequestOptions({
+      headers: {
+        'Authorization': `Bearer ${this.accessToken}`,
+        'ngrok-skip-browser-warning': 'true'
+      },
+    });
+    return this.httpClient.delete<any>(this.baseUrl + `cms/topic/${id}`, options);
   }
 }

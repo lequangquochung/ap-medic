@@ -2,12 +2,10 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import packageInfo from '../../package.json';
 
 export const environment = {
-  appVersion: packageInfo.version,
   production: false,
-  apiUrl: 'https://9ee6-14-185-46-211.ngrok-free.app/'
+  apiUrl: 'https://lab-production-18bc.up.railway.app/'
 };
 
 /*

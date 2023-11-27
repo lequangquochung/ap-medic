@@ -21,7 +21,7 @@ import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthenticationModule } from './demo/pages/authentication/authentication.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule, 
     BrowserAnimationsModule,
     AuthenticationModule,
+    
   ],
   providers: [NavigationItem],
   bootstrap: [AppComponent],
