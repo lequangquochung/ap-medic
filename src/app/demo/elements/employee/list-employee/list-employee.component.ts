@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
-  employees?: IEmployeeCreate[];
+  employees: IEmployeeCreate[] = [];
   baseDomain: string = environment.apiUrl;
 
   data: IEmployeeCreate[] = [

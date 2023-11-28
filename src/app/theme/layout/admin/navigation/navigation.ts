@@ -74,12 +74,12 @@ const NavigationItems = [
     children: [
       {
         id: 'employee',
-        title: 'Employee',
+        title: 'Nhân Viên',
         type: 'collapse',
         icon: 'ti ti-key',
         children: [
           {
-            id: 'listEmployee',
+            id: 'Danh sách nhân viên',
             title: 'List Employee',
             type: 'item',
             url: '/app/employee/list-employee',
@@ -98,13 +98,13 @@ const NavigationItems = [
       },
       {
         id: 'news',
-        title: 'News',
+        title: 'Danh sách bài viết',
         type: 'collapse',
         icon: 'ti ti-key',
         children: [
           {
             id: 'listNews',
-            title: 'News',
+            title: 'Bài viết',
             type: 'item',
             url: '/app/news/list-news',
             target: false,
@@ -118,52 +118,42 @@ const NavigationItems = [
             target: false,
             breadcrumbs: false
           },
-          // {
-          //   id: 'createEmployee',
-          //   title: 'Create Employee',
-          //   type: 'item',
-          //   url: '/app/employee/create-employee',
-          //   target: false,
-          //   breadcrumbs: false
-          // },
         ]
       },
       {
-        id: 'color',
-        title: 'Colors',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/color',
-        icon: 'ti ti-brush'
+        id: 'labService',
+        title: 'Dịch vụ',
+        type: 'collapse',
+        icon: 'ti ti-key',
+        children: [
+          {
+            id: 'labService',
+            title: 'Danh sách dịch vụ',
+            type: 'item',
+            url: '/app/lab-service/list',
+            target: false,
+            breadcrumbs: false
+          },
+          {
+            id: 'createLabService',
+            title: 'Tạo chỉ mục chính',
+            type: 'item',
+            url: '/app/lab-service/create-service',
+            target: false,
+            breadcrumbs: false
+          },
+        ]
       },
+      // {
+      //   id: 'color',
+      //   title: 'Colors',
+      //   type: 'item',
+      //   classes: 'nav-item',
+      //   url: '/color',
+      //   icon: 'ti ti-brush'
+      // },
     ]
   },
-  {
-    id: 'other',
-    title: 'Other',
-    type: 'group',
-    icon: 'icon-navigation',
-    children: [
-      {
-        id: 'sample-page',
-        title: 'Sample Page',
-        type: 'item',
-        url: '/sample-page',
-        classes: 'nav-item',
-        icon: 'ti ti-brand-chrome'
-      },
-      {
-        id: 'document',
-        title: 'Document',
-        type: 'item',
-        classes: 'nav-item',
-        url: 'https://codedthemes.gitbook.io/berry-angular/',
-        icon: 'ti ti-vocabulary',
-        target: true,
-        external: true
-      }
-    ]
-  }
 ];
 
 @Injectable()

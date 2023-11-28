@@ -12,11 +12,13 @@ export class CreateEmployeeComponent implements OnInit {
 
 
   fileUploadEmployee?: File;
+  fileData: any;
   fileName?: string;
   createForm = this.fb.group({
     fullName: new FormControl<string>('', [Validators.required]),
     description: new FormControl<string>(''),
     degree: new FormControl<string>('', [Validators.required]),
+    avatar: ['']
   });
 
   constructor(
@@ -27,12 +29,12 @@ export class CreateEmployeeComponent implements OnInit {
   ngOnInit(): void { }
 
   protected createEmployee() {
-    this.employeeService.uploadAvatar(this.fileUploadEmployee[0]).subscribe({
-      next: (res) => {
-        this.fileName = res.data;
-        this.registerEmployee();
-      }
-    });
+    // this.employeeService.uploadAvatar(this.fileUploadEmployee[0]).subscribe({
+    //   next: (res) => {
+    //     this.fileName = res.data;
+    //     this.registerEmployee();
+    //   }
+    // });
   }
 
   registerEmployee() {
@@ -40,7 +42,7 @@ export class CreateEmployeeComponent implements OnInit {
       fullName: this.createForm.get('fullName').value,
       description: this.createForm.get('description').value,
       degree: this.createForm.get('degree').value,
-      avatar: this.fileName
+      avatar: this.fileData
     }
     this.employeeService.createEmployee(payload).subscribe({
       next: (respone) => {
@@ -53,9 +55,12 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   protected handleUpload(event: any) {
-    if (event.target.files.length > 0) {
-      this.fileUploadEmployee = event.srcElement.files;
-    }
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.fileData = reader.result
+    };
   }
 
   protected getDefaultAvatar(e: Event) {

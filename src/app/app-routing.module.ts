@@ -1,12 +1,8 @@
-import { NgModule, Component, Inject } from '@angular/core';
-import { CanActivateFn, RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './theme/layout/admin/admin.component';
-import { GuestComponent } from './theme/layout/guest/guest.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import LoginComponent from './demo/pages/authentication/login/login.component';
-import { ListEmployeeComponent } from './demo/elements/employee/list-employee/list-employee.component';
 import { AuthGuard } from './guard/auth.guard';
-import { EditEmployeeComponent } from './demo/elements/employee/edit-employee/edit-employee.component';
-import { AdminService } from './services/admin/admin-service';
+import { AdminComponent } from './theme/layout/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -42,6 +38,10 @@ const routes: Routes = [
       {
         path:'news',
         loadChildren: () => import('./demo/elements/technews/tech-news.module').then((m) => m.TechNewsModule)
+      },
+      {
+        path:'lab-service',
+        loadChildren: () => import('./demo/elements/lab-service/lab-service.module').then((m) => m.LabServiceModule)
       }
     ],
   },

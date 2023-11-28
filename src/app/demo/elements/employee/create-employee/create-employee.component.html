@@ -1,5 +1,5 @@
 <div class="block-create-employee">
-  <form class="form-group" [formGroup]="createForm" (ngSubmit)="createEmployee()">
+  <form class="form-group" [formGroup]="createForm" (ngSubmit)="registerEmployee()">
       <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
           <input type="text" class="form-control" placeholder="Họ và tên" formControlName="fullName">
@@ -17,7 +17,7 @@
 
       <div class="mb-3">
           <label for="formFile" class="form-label">Ảnh đại diện</label>
-          <input class="form-control" type="file" id="formFile"  (change)="handleUpload($event)">
+          <input class="form-control" type="file" id="formFile" (change)="handleUpload($event)">
           <!-- <img class="avatar-employee" (error)="getDefaultAvatar($event)" *ngIf="imageSrc" id="blah" [src]="imageSrc" width="150px" alt="your image" /> -->
       </div>
       <div class="d-flex justify-content-end">
@@ -25,3 +25,4 @@
       </div>
   </form>
 </div>
+

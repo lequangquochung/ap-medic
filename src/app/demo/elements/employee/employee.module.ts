@@ -28,18 +28,17 @@ const routes: Routes = [
       {
         path: ':employeeId/edit',
         component: EditEmployeeComponent
-    }
+      }
     ],
   },
-  
 ];
 
 
 @NgModule({
   declarations: [
-    ListEmployeeComponent, 
-    EmployeeComponent, 
-    CreateEmployeeComponent, 
+    ListEmployeeComponent,
+    EmployeeComponent,
+    CreateEmployeeComponent,
     EditEmployeeComponent
   ],
   imports: [

@@ -1,0 +1,13 @@
+<p-toast></p-toast>
+<div class="block-create-content row">
+    <!-- <form class="form-group" [formGroup]="labServicetForm" (ngSubmit)="submitForm()"> -->
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Tiêu đề</label>
+            <input type="text" class="form-control" placeholder="Tiêu đề" [(ngModel)]="titlePayload" >
+            <input type="hidden" [(ngModel)]="orderTitle"/>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary" (click)="submitForm()"> Tạo Mới</button>
+        </div>
+    <!-- </form> -->
+</div>
