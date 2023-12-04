@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { CarouselModule } from 'primeng/carousel';
 
 const routes: Routes = [
   {
@@ -50,7 +51,9 @@ const routes: Routes = [
     TableModule,
     InputTextModule,
     ToastModule,
-    ConfirmPopupModule 
+    ConfirmPopupModule ,
+    CarouselModule
+    
   ],
   exports: [RouterModule],
  

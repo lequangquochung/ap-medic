@@ -47,6 +47,7 @@ export class CreateTechNewsComponent implements OnInit {
             },
         ]
     };
+    fileData: any;
 
     constructor(private fb: FormBuilder,
         private messageService: MessageService,
@@ -62,21 +63,7 @@ export class CreateTechNewsComponent implements OnInit {
     ngOnInit(): void { }
 
     submitForm() {
-        if(this.imgPayload) {
-            this.employeeService.uploadAvatar(this.imgPayload[0]).subscribe({
-                next: (res) => {
-                    this.imageSrc = this.baseDomain + res.data;
-                    this.imgPayload = res.data;
-                    this.createContent();
-                },
-                error(e : Error) {
-                    console.log('error', e);
-                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
-                }
-            });
-        } else {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ảnh đại diện bắt buộc' });
-        }
+        this.createContent();
     }
 
     createContent() {
@@ -84,8 +71,9 @@ export class CreateTechNewsComponent implements OnInit {
             title: this.contentForm.controls['title'].value,
             subContent: this.contentForm.controls['subContent'].value,
             content: this.contentForm.controls['content'].value,
-            thumbnail: this.imgPayload
+            thumbnail: this.fileData
         }
+
         this.techNewsService.createContent(payload).subscribe({
             next: () => {
                 this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tạo bài viết thành công' });
@@ -102,18 +90,27 @@ export class CreateTechNewsComponent implements OnInit {
         imgElement.src = 'assets/images/user/default-avatar.png';
     }
 
-    protected readURL(event: any): void {
-        if (event.target.files && event.target.files.length > 0) {
-            this.imgPayload = event.srcElement.files;
-            let reader = new FileReader();
-            if (event.target.files && event.target.files.length > 0) {
-                let file = event.target.files[0];
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    this.imageSrc = reader.result;
-                };
-            }
-        }
+    protected handleUpload(event: any) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.fileData = reader.result
+        };
     }
+
+    // protected readURL(event: any): void {
+    //     if (event.target.files && event.target.files.length > 0) {
+    //         this.imgPayload = event.srcElement.files;
+    //         let reader = new FileReader();
+    //         if (event.target.files && event.target.files.length > 0) {
+    //             let file = event.target.files[0];
+    //             reader.readAsDataURL(file);
+    //             reader.onload = () => {
+    //                 this.imageSrc = reader.result;
+    //             };
+    //         }
+    //     }
+    // }
 
 }

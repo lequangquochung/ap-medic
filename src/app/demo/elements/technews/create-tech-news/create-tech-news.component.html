@@ -13,7 +13,7 @@
 
         <div class="mb-3 col-4">
             <label for="formFile" class="form-label">Ảnh đại diện</label>
-            <input class="form-control" type="file" id="formFile" (change)="readURL($event)">
+            <input class="form-control" type="file" id="formFile" (change)="handleUpload($event)">
             <img class="avatar-employee" (error)="getDefaultAvatar($event)" *ngIf="imageSrc" id="blah" [src]="imageSrc"
                 width="150px" alt="your image" />
         </div>
