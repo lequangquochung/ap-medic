@@ -13,9 +13,6 @@
 [phases.install]
 cmds = ['npm i --legacy-peer-deps']
 
-[phases.build]
-cmds = ["npm run build"]
-
 # get the output path from our angular.json file
 [phases.output]
     dependsOn = ['setup']
