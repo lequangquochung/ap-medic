@@ -1,3 +1,19 @@
-<pre>
-  app-edit-service
-</pre>
+<p-toast></p-toast>
+<p-confirmPopup></p-confirmPopup>
+<div class="service-details row">
+    <div class="col">
+        <div [formGroup]="submitForm" class="mb-3">
+            <div class="">
+                <div class="" [formGroup]="formItem" *ngFor="let formItem of formArrays; let i = index">
+                    <input pInputText type="text" formControlName="content" class="mb-1 input-text">
+                    <button class="btn btn-danger ms-3" (click)="deleteItem(i)">Xoá</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-footer">
+            <button (click)="addService()" class="btn btn-primary">Thêm</button>
+            <button (click)="saveItems()" class="btn btn-success ms-3">Cập nhật</button>
+        </div>
+    </div>
+
+</div>

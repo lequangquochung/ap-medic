@@ -10,60 +10,31 @@ import { createRequestOptions } from "src/app/helpers/RequestOptions";
   providedIn: 'root'
 })
 export class TechNewsService {
-  accessToken: string;
   constructor(private httpClient: HttpClient,
     private adminService: AdminService) {
-    this.accessToken = this.adminService.accessToken
   }
   private baseUrl = `${environment.apiUrl}`
 
   createContent(payload: any): Observable<IResponseData<any>> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.accessToken}`
-    });
-    return this.httpClient.post<any>(this.baseUrl + 'cms/topic', payload, { headers: headers })
+    return this.httpClient.post<any>(this.baseUrl + 'cms/topic', payload)
   }
 
   getListNews(): Observable<any> {
     const options = createRequestOptions({
-      params: { take: '', skip: '' },
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-        'ngrok-skip-browser-warning': 'true'
-      },
+      params: { take: '999', skip: '' },
     });
     return this.httpClient.get<any>(this.baseUrl + `cms/topic`, options);
   }
 
   edit(id: string, payload): Observable<any> {
-    const options = createRequestOptions({
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-        'ngrok-skip-browser-warning': 'true'
-      },
-
-    });
-    return this.httpClient.put<any>(this.baseUrl + `cms/topic/${id}`, payload, options);
+    return this.httpClient.put<any>(this.baseUrl + `cms/topic/${id}`, payload);
   }
 
   getNewsById(id: string): Observable<any> {
-    const options = createRequestOptions({
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-        'ngrok-skip-browser-warning': 'true'
-      },
-    });
-    return this.httpClient.get<any>(this.baseUrl + `cms/topic/${id}`, options);
+    return this.httpClient.get<any>(this.baseUrl + `cms/topic/${id}`);
   }
 
   delete(id: string): Observable<any> {
-    const options = createRequestOptions({
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-        'ngrok-skip-browser-warning': 'true'
-      },
-    });
-    return this.httpClient.delete<any>(this.baseUrl + `cms/topic/${id}`, options);
+    return this.httpClient.delete<any>(this.baseUrl + `cms/topic/${id}`);
   }
 }

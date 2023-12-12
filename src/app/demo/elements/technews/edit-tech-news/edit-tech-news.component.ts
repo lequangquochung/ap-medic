@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MessageService } from 'primeng/api';
@@ -20,6 +21,8 @@ export class EditTechNewsComponent implements OnInit {
     imageSrc: any;
     imgPayload: File;
     htmlContent: any = "";
+    fileData: any;
+    imageForm: any;
     editorConfig: AngularEditorConfig = {
         editable: true,
         spellcheck: true,
@@ -54,6 +57,7 @@ export class EditTechNewsComponent implements OnInit {
         private route: ActivatedRoute,
         private techNewsService: TechNewsService,
         private messageService: MessageService,
+        private _sanitizer: DomSanitizer,
         private employeeService: EmployeeService) {
         this.contentForm = this.fb.group({
             title: ['', Validators.required],
@@ -76,35 +80,38 @@ export class EditTechNewsComponent implements OnInit {
                 title: this.contentForm.get('title').value,
                 subContent: this.contentForm.get('subContent').value,
                 content: this.contentForm.get('content').value,
-                thumbnail: '',
+                thumbnail:this.contentForm.get('thumbnail').value,
             }
-            if (this.imgPayload) {
-                this.employeeService.uploadAvatar(this.imgPayload[0]).subscribe({
-                    next: (res) => {
-                        this.imageSrc = this.baseDomain + res.data;
-                        this.imgPayload = res.data;
-                        this.editPayload(payload);
-                    },
-                    error(e: Error) {
-                        console.log('error', e);
-                        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
-                    }
-                });
-            } else {
-                const payload = {
-                    title: this.contentForm.get('title').value,
-                    subContent: this.contentForm.get('subContent').value,
-                    content: this.contentForm.get('content').value,
-                    thumbnail:  this.contentForm.get('thumbnail').value,
-                }
-                this.editPayload(payload);
-            }
+            this.editPayload(payload);
+            
+            // if (this.imgPayload) {
+            //     this.employeeService.uploadAvatar(this.imgPayload[0]).subscribe({
+            //         next: (res) => {
+            //             this.imageSrc = this.baseDomain + res.data;
+            //             this.imgPayload = res.data;
+            //             this.editPayload(payload);
+            //         },
+            //         error(e: Error) {
+            //             console.log('error', e);
+            //             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
+            //         }
+            //     });
+            // } else {
+            //     const payload = {
+            //         title: this.contentForm.get('title').value,
+            //         subContent: this.contentForm.get('subContent').value,
+            //         content: this.contentForm.get('content').value,
+            //         thumbnail:  this.contentForm.get('thumbnail').value,
+            //     }
+            //     
+            // }
         }
     }
 
     editPayload(payload: any) {
         this.techNewsService.edit(this.newsId, payload).subscribe({
             next: () => {
+                this
                 this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa bài viết thành công' });
             },
             error: () => {
@@ -117,20 +124,21 @@ export class EditTechNewsComponent implements OnInit {
         this.techNewsService.getNewsById(this.newsId).subscribe({
             next: (res) => {
                 this.contentForm.patchValue(res.data);
-                this.imageSrc = this.baseDomain + res.data.thumbnail;
+                this.imageForm =res.data.thumbnail;
+                this.fileData = this.convertToImg(res.data.thumbnail);
             }
         })
     }
 
     protected readURL(event: any): void {
         if (event.target.files && event.target.files.length > 0) {
-            this.imgPayload = event.srcElement.files;
+            this.imageForm = event.srcElement.files;
             let reader = new FileReader();
             if (event.target.files && event.target.files.length > 0) {
                 let file = event.target.files[0];
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    this.imageSrc = reader.result;
+                    this.imageForm = reader.result;
                 };
             }
         }
@@ -140,4 +148,9 @@ export class EditTechNewsComponent implements OnInit {
         const imgElement = e.target as HTMLImageElement;
         imgElement.src = 'assets/images/user/default-avatar.png';
     }
+
+    convertToImg(stringBase: string): SafeUrl {
+        const imageUrl = stringBase;
+        return this._sanitizer.bypassSecurityTrustUrl(imageUrl);
+      }
 }

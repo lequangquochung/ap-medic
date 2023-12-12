@@ -124,6 +124,6 @@ export class BreadcrumbComponent {
       }
     });
     this.navigationList = result;
-    this.titleService.setTitle(title + ' | Berry Angular Template');
+    this.titleService.setTitle(title + ' | An Phuc Admin');
   }
 }

@@ -7,71 +7,37 @@ import { environment } from 'src/environments/environment';
 import { AdminService } from '../admin/admin-service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class EmployeeService {
-  accessToken: string;
-  constructor(private httpClient: HttpClient,
-    private adminService: AdminService) { 
-      this.accessToken  = this.adminService.accessToken
+    accessToken: string;
+    constructor(private httpClient: HttpClient,
+        private adminService: AdminService) {
+        this.accessToken = this.adminService.accessToken
     }
-  
-  private baseUrl = `${environment.apiUrl}`
 
-  uploadAvatar(file: File): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.accessToken}`,
-      observe: 'response'
-    });
-    let formParams = new FormData();
-    formParams.append('file', file)
-    
-    return this.httpClient.post<any>(this.baseUrl + 'cms/upload', formParams, {headers: headers},)
-  }
-  
-  createEmployee(payload: any):  Observable<IResponseData<any>> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.accessToken}`
-    });
-    
-    return this.httpClient.post<any>(this.baseUrl + 'cms/employee', payload, {headers: headers})
-  }
+    private baseUrl = `${environment.apiUrl}`
 
-  getEmployees(): Observable<any> {
-    const options = createRequestOptions({
-      params: { take: 999 },
-      headers: { 'Authorization': `Bearer ${this.accessToken}`,
-      'ngrok-skip-browser-warning': 'true' },
-    });
+    createEmployee(payload: any): Observable<IResponseData<any>> {
+        return this.httpClient.post<any>(this.baseUrl + 'cms/employee', payload)
+    }
 
-    return this.httpClient.get<any>(this.baseUrl + `cms/employee`, options);
-  }
+    getEmployees(): Observable<any> {
 
-  getEmployeeById(id: string) : Observable<any> {
-    const options = createRequestOptions({
-      headers: { 'Authorization': `Bearer ${this.accessToken}`,
-      'ngrok-skip-browser-warning': 'true' },
-    });
-    return this.httpClient.get<any>(this.baseUrl + `cms/employee/${id}`, options);
-  }
+        return this.httpClient.get<any>(this.baseUrl + `cms/employee`);
+    }
 
-  editEmployee(id: string, payload: any): Observable<any> {
-    const options = createRequestOptions({
-      headers: { 'Authorization': `Bearer ${this.accessToken}`,
-      'ngrok-skip-browser-warning': 'true' },
-    
-    });
-    return this.httpClient.put<any>(this.baseUrl + `cms/employee/${id}`, payload, options);
-  }
+    getEmployeeById(id: string): Observable<any> {
+      
+        return this.httpClient.get<any>(this.baseUrl + `cms/employee/${id}`);
+    }
 
-  deleteEmployee(id: string): Observable<any>{ 
-    const options = createRequestOptions({
-      headers: { 'Authorization': `Bearer ${this.accessToken}`,
-      'ngrok-skip-browser-warning': 'true' },
-    
-    });
-    return this.httpClient.delete<any>(this.baseUrl + `cms/employee/${id}`, options);
-  }
+    editEmployee(id: string, payload: any): Observable<any> {
+        return this.httpClient.put<any>(this.baseUrl + `cms/employee/${id}`, payload);
+    }
+
+    deleteEmployee(id: string): Observable<any> {
+        return this.httpClient.delete<any>(this.baseUrl + `cms/employee/${id}`);
+    }
 
 }

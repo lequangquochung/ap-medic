@@ -68,7 +68,7 @@ const NavigationItems = [
   // },
   {
     id: 'elements',
-    title: 'Elements',
+    title: 'Danh sách',
     type: 'group',
     icon: 'icon-navigation',
     children: [

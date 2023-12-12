@@ -1,3 +1,5 @@
 <div *ngFor="let parrent of data">
-
+    <div class="item-list">
+        <button class="btn " (click)="onEdit(parrent.id)">{{parrent?.title}}</button>
+    </div>
 </div>

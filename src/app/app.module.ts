@@ -20,8 +20,9 @@ import { ConfigurationComponent } from './theme/layout/admin/configuration/confi
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthenticationModule } from './demo/pages/authentication/authentication.module';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
+import { AuthInterceptor } from './interceptor/interceptor';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { ToastModule } from 'primeng/toast';
     AuthenticationModule,
     
   ],
-  providers: [NavigationItem],
+  providers: [NavigationItem, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

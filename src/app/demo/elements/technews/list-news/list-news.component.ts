@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { INews } from 'src/app/models/INews';
@@ -17,12 +18,17 @@ export class ListNewsComponent implements OnInit {
     data?: INews[];
     loading: boolean = true;
 
+    totalRecords: number = 0;
+    rows: number = 10;
+
     activityValues: number[] = [0, 100];
 
     constructor(private router: Router,
         private confirmationService: ConfirmationService,
         private techNewsService: TechNewsService,
-        private messageService: MessageService,) {
+        private messageService: MessageService,
+        private _sanitizer: DomSanitizer
+        ) {
 
     }
     ngOnInit(): void {
@@ -38,8 +44,10 @@ export class ListNewsComponent implements OnInit {
             next: (res) => {
                 if (res.success) {
                     this.loading = false;
-                    this.data = res.data.map((item: INews) => {
-                        item.thumbnail = this.baseDomain + item.thumbnail;
+                    this.totalRecords = res.totalItems;
+                    this.data = res.data.map((item: any) => {
+                        // item.thumbnail = this.baseDomain + item.thumbnail;
+                        item.thumbnail = this.convertToImg(item.thumbnail);
                         return item;
                     })
                 }
@@ -53,7 +61,6 @@ export class ListNewsComponent implements OnInit {
             message: 'Xoá bài viết ?',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                // this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
                 this.deleteNews(id);
             },
             reject: () => {
@@ -66,8 +73,8 @@ export class ListNewsComponent implements OnInit {
         this.techNewsService.delete(id).subscribe({
             next: (res) => {
                 if (res.success) {
-                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Xoá bài viết thành công' });
                     this.getListNews();
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Xoá bài viết thành công' });
                 } else {
                     this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
                 }
@@ -76,6 +83,11 @@ export class ListNewsComponent implements OnInit {
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
             }
         })
+    }
+
+    convertToImg(stringBase: string): SafeUrl {
+        const imageUrl = stringBase;
+        return this._sanitizer.bypassSecurityTrustUrl(imageUrl);
     }
 
     protected getDefaultAvatar(e: Event) {

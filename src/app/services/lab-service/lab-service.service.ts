@@ -10,30 +10,25 @@ import { IResponseData } from "src/app/models/response-data.model";
   providedIn: 'root'
 })
 export class LabService {
-  accessToken: string;
 
-  constructor(private httpClient: HttpClient,
-    private adminService: AdminService) {
-    this.accessToken = this.adminService.accessToken
+  constructor(private httpClient: HttpClient) {
   }
   private baseUrl = `${environment.apiUrl}`
 
   getListLabService(): Observable<any> {
-    const options = createRequestOptions({
-      headers: {
-        'Authorization': `Bearer ${this.accessToken}`,
-        'ngrok-skip-browser-warning': 'true'
-      },
-    });
-    return this.httpClient.get<any>(this.baseUrl + `cms/lab-service/`, options);
+    return this.httpClient.get<any>(this.baseUrl + `cms/lab-service/`);
   }
 
   createMainService(payload: any): Observable<IResponseData<any>> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.accessToken}`
-    });
-    return this.httpClient.post<any>(this.baseUrl + 'cms/lab-service', payload, { headers: headers })
+    return this.httpClient.post<any>(this.baseUrl + 'cms/lab-service', payload)
+  }
+
+  getListServiceDetail(id: string): Observable<IResponseData<any>> {
+    return this.httpClient.get<any>(this.baseUrl + `cms/lab-service/${id}`);
+  }
+
+  editService(id: string, payload: any ): Observable<IResponseData<any>>{
+    return this.httpClient.put<any>(this.baseUrl + `cms/lab-service/${id}`, payload);
   }
 
  

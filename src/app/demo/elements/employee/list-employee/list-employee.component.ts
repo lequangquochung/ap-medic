@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { getDefaultAvatar } from 'src/app/helpers/default-avatar';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { IEmployeeCreate } from 'src/app/models/IEmployeee';
 import { EmployeeService } from 'src/app/services/employee/employee-service';
 import { environment } from 'src/environments/environment';
@@ -8,23 +9,18 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-list-employee',
   templateUrl: './list-employee.component.html',
-  styleUrls: ['./list-employee.component.scss']
+  styleUrls: ['./list-employee.component.scss'],
+  providers: [MessageService, ConfirmationService]
 })
 export class ListEmployeeComponent implements OnInit {
   employees: IEmployeeCreate[] = [];
   baseDomain: string = environment.apiUrl;
 
-  data: IEmployeeCreate[] = [
-    { id: '1', fullName: 'Andrew ', description: 'Doctor Thanh', avatar: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg', degree: 'Doctor' },
-    { id: '2', fullName: ' Owen', description: 'Doctor Thanh', avatar: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg', degree: 'Doctor' },
-    { id: '3', fullName: 'Hung ', description: 'Doctor Thanh', avatar: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg', degree: 'Doctor' },
-    { id: '4', fullName: 'Andrew Owen', description: 'Doctor Thanh', avatar: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg', degree: 'Doctor' },
-    { id: '5', fullName: 'Andrew Owen', description: 'Doctor Thanh', avatar: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg', degree: 'Doctor' },
-    { id: '6', fullName: 'Andrew Owen', description: 'Doctor Thanh', avatar: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg', degree: 'Doctor' },
-  ]
-
   constructor(private router: Router,
-    private employeeService: EmployeeService) { }
+    private employeeService: EmployeeService,
+    private confirmationService: ConfirmationService,
+    private _sanitizer: DomSanitizer,
+    private messageService: MessageService,) { }
 
   ngOnInit(): void {
     this.getEmployees();
@@ -39,9 +35,8 @@ export class ListEmployeeComponent implements OnInit {
       next: (res) => {
         if (res.success) {
           this.employees = res.data
-          this.employees.map((item: any)=> {
-            console.log(item);
-            item.avatar = this.baseDomain + item.avatar;
+          this.employees.map((item: any) => {
+            item.avatar = this.convertToImg(item.avatar);
           })
         }
       },
@@ -52,13 +47,32 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   protected onDelete(id: string) {
-    this.employeeService.deleteEmployee(id).subscribe({
-      next: (res) =>{
-        if(res.success) {
-          this.getEmployees()
-        }
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Xoá nhân viên này ?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.employeeService.deleteEmployee(id).subscribe({
+          next: (res) => {
+            if (res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Xoá nhân viên thành công' });
+              this.getEmployees();
+            }
+          }
+        })
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
       }
-    })
+    });
+
+
+
+  }
+
+  convertToImg(stringBase: string): SafeUrl {
+    const imageUrl = stringBase;
+    return this._sanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 
   protected getDefaultAvatar(e: Event) {
@@ -66,7 +80,7 @@ export class ListEmployeeComponent implements OnInit {
     imgElement.src = 'assets/images/user/default-avatar.png';
   }
 
-  onImageError(entity: any):void {
+  onImageError(entity: any): void {
     entity.imageUrl = 'some-image.svg'
-}
+  }
 }

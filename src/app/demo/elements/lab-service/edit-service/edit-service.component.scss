@@ -1,6 +1,17 @@
-.block-create-service {
-  width: 50%;
-  border: 1px solid #d1d1d1;
-  border-radius: .5rem;
-  padding: 1rem;
+.service-details {
+  .input-text {
+    min-width: 30%;
+  }
+
+  .block-create-service {
+    width: 50%;
+    border: 1px solid #d1d1d1;
+    border-radius: .5rem;
+    padding: 1rem;
+  }
+
+  .btn {
+    height: 47px !important;
+  }
+
 }

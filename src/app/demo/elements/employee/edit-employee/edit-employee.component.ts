@@ -1,30 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { EmployeeService } from 'src/app/services/employee/employee-service';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-employee',
   templateUrl: './edit-employee.component.html',
-  styleUrls: ['./edit-employee.component.scss']
+  styleUrls: ['./edit-employee.component.scss'],
+  providers: [MessageService, ConfirmationService]
 })
 export class EditEmployeeComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder,
-    private employeeService: EmployeeService) { }
+    private _sanitizer: DomSanitizer,
+    private employeeService: EmployeeService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,) { }
 
-  imageSrc: any;
-  imgPayload: any;
+  imageForm: any;
   employee?: any;
   employeeId?: string;
   baseDomain: string = environment.apiUrl;
   dataForm = this.fb.group({
     fullName: new FormControl<string>('', [Validators.required]),
     description: new FormControl<string>(''),
-    avatar: ['', Validators.required],
+    // avatar: ['', Validators.required],
     degree: new FormControl<string>('', [Validators.required]),
   });
+  fileData: any;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -39,37 +45,23 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeService.getEmployeeById(this.employeeId).subscribe(res => {
       if (res.success) {
         this.dataForm.patchValue(res.data);
-        this.imageSrc = this.baseDomain + res.data.avatar;
+        this.imageForm = res.data.avatar;
+        this.fileData = this.convertToImg(res.data.avatar);
       }
     });
   }
 
   protected editEmployee() {
     if (this.dataForm.valid) {
-      if (this.imgPayload) {
-        const payload = {
-          fullName: this.dataForm.get('fullName').value,
-          description: this.dataForm.get('description').value,
-          degree: this.dataForm.get('degree').value,
-          avatar: ""
-        }
-        this.employeeService.uploadAvatar(this.imgPayload[0]).subscribe({
-          next: (res) => {
-            this.imageSrc = this.baseDomain + res.data;
-            payload.avatar = res.data;
-            this.editPayload(payload);
-          }
-        })
-      } else {
-        const payloadNonAvatar = {
-          fullName: this.dataForm.get('fullName').value,
-          description: this.dataForm.get('description').value,
-          degree: this.dataForm.get('degree').value,
-          avatar: this.dataForm.get('avatar').value
-        }
-        this.editPayload(payloadNonAvatar);
+      let payload = {
+        fullName: this.dataForm.get('fullName').value,
+        description: this.dataForm.get('description').value,
+        degree: this.dataForm.get('degree').value,
+        avatar: this.imageForm
       }
-
+      console.log(payload);
+      
+      this.editPayload(payload);
 
     } else {
       console.log('invalid');
@@ -79,27 +71,41 @@ export class EditEmployeeComponent implements OnInit {
   editPayload(payload: any) {
     this.employeeService.editEmployee(this.employeeId, payload).subscribe({
       next: (res) => {
-        ///ANCHOR - add toast
-        // console.log('edit', res);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Chỉnh sửa thành công' });
       },
       error: (e) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
         console.log(e);
       }
     })
   }
 
+  convertToImg(stringBase: string): SafeUrl {
+    const imageUrl = stringBase;
+    return this._sanitizer.bypassSecurityTrustUrl(imageUrl);
+  }
+
   protected readURL(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
-      this.imgPayload = event.srcElement.files;
+      this.imageForm = event.srcElement.files;
       let reader = new FileReader();
       if (event.target.files && event.target.files.length > 0) {
         let file = event.target.files[0];
         reader.readAsDataURL(file);
         reader.onload = () => {
-          this.imageSrc = reader.result;
+          this.imageForm = reader.result;
         };
       }
     }
+  }
+
+  protected handleUpload(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.fileData = reader.result
+    };
   }
 
   protected getDefaultAvatar(e: Event) {

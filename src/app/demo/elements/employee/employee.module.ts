@@ -6,6 +6,8 @@ import { CreateEmployeeComponent } from './create-employee/create-employee.compo
 import EmployeeComponent from './employee.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ToastModule } from 'primeng/toast';
 
 
 const routes: Routes = [
@@ -44,6 +46,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    ToastModule,
+    ConfirmPopupModule ,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]

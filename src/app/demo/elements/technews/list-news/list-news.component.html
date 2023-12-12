@@ -1,40 +1,33 @@
 <p-toast></p-toast>
 <p-confirmPopup></p-confirmPopup>
 <div class="card">
-    <p-table #dt [value]="data" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']">
-        <!-- <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Customers
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')"
-                        placeholder="Global Search" />
-                </span>
-            </div>
-        </ng-template> -->
+    <p-table #dt [value]="data" 
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        >
         <ng-template pTemplate="header">
             <tr>
-                <th class="w-25"></th>
+                <th></th>
                 <th class="w-25">
                     <div class="flex justify-content-between align-items-center">
                         Title
                     </div>
                 </th>
-                <th class="w-50">
+                <th class="w-25">
                     <div class="flex justify-content-between align-items-center">
                         Mô tả ngắn
                     </div>
                 </th>
 
-                <th class="w-25">
+                <th>
                     <div class="flex justify-content-between align-items-center">
                         Ngày tạo
                     </div>
                 </th>
-                <th class="w-50"></th>
+                <th class="w-100"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-newsItem>

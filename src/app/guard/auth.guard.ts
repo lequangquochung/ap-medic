@@ -9,7 +9,6 @@ import { AdminService } from '../services/admin/admin-service';
 export class AuthGuard implements CanActivate {
   constructor(private adminService: AdminService,
     private router: Router) {}
-
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

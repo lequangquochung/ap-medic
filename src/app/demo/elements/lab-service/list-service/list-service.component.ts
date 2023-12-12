@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LabService } from 'src/app/services/lab-service/lab-service.service';
 
 @Component({
@@ -10,7 +11,8 @@ export class ListServiceComponent implements OnInit {
 
   data: any;
 
-  constructor( private labService: LabService) {
+  constructor( private labService: LabService,
+    private router: Router,) {
 
   }
   ngOnInit(): void {
@@ -29,4 +31,9 @@ export class ListServiceComponent implements OnInit {
       } 
     }) 
   }
+  
+  onEdit(id: string) {
+    this.router.navigate([`/app/lab-service/${id}/edit-service`]);
+  }
 }
+

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MessageService } from 'primeng/api';
-import { EmployeeService } from 'src/app/services/employee/employee-service';
 import { TechNewsService } from 'src/app/services/tech-news/tech.news-service';
-import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-create-tech-news',
@@ -13,7 +12,8 @@ import { environment } from 'src/environments/environment';
     providers: [MessageService]
 })
 export class CreateTechNewsComponent implements OnInit {
-    baseDomain: string = environment.apiUrl;
+    @ViewChild('myInputFile')
+    myInputVariable?: ElementRef;
     contentForm: FormGroup;
     imageSrc: any;
     imgPayload: File;
@@ -21,7 +21,7 @@ export class CreateTechNewsComponent implements OnInit {
     editorConfig: AngularEditorConfig = {
         editable: true,
         spellcheck: true,
-        height: '30rem',
+        height: '100%',
         minHeight: '15rem',
         placeholder: 'Nhập nội dung bài viết',
         translate: 'no',
@@ -48,11 +48,13 @@ export class CreateTechNewsComponent implements OnInit {
         ]
     };
     fileData: any;
+    defaultSrcImg: string = 'assets/images/user/default-avatar.png';
+    defaultImgData: any;
 
     constructor(private fb: FormBuilder,
         private messageService: MessageService,
         private techNewsService: TechNewsService,
-        private employeeService: EmployeeService,
+        private http: HttpClient
     ) {
         this.contentForm = this.fb.group({
             title: ['', Validators.required],
@@ -60,7 +62,9 @@ export class CreateTechNewsComponent implements OnInit {
             content: ['', Validators.required]
         })
     }
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.getFileDefault();
+    }
 
     submitForm() {
         this.createContent();
@@ -71,23 +75,29 @@ export class CreateTechNewsComponent implements OnInit {
             title: this.contentForm.controls['title'].value,
             subContent: this.contentForm.controls['subContent'].value,
             content: this.contentForm.controls['content'].value,
-            thumbnail: this.fileData
+            thumbnail: this.fileData ? this.fileData : this.defaultImgData
         }
-
-        this.techNewsService.createContent(payload).subscribe({
-            next: () => {
-                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tạo bài viết thành công' });
-            },
-            error() {
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
-            }
-        })
+        console.log('payload', payload);
+        
+        if (this.contentForm.valid) {
+            this.techNewsService.createContent(payload).subscribe({
+                next: () => {
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tạo bài viết thành công' });
+                    this.contentForm?.reset();
+                    this.myInputVariable.nativeElement.value = "";
+                },
+                error() {
+                    this.contentForm?.reset();
+                    this.myInputVariable!.nativeElement.value = "";
+                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
+                }
+            })
+        }
     }
-
 
     protected getDefaultAvatar(e: Event) {
         const imgElement = e.target as HTMLImageElement;
-        imgElement.src = 'assets/images/user/default-avatar.png';
+        imgElement.src = this.defaultSrcImg;
     }
 
     protected handleUpload(event: any) {
@@ -99,18 +109,16 @@ export class CreateTechNewsComponent implements OnInit {
         };
     }
 
-    // protected readURL(event: any): void {
-    //     if (event.target.files && event.target.files.length > 0) {
-    //         this.imgPayload = event.srcElement.files;
-    //         let reader = new FileReader();
-    //         if (event.target.files && event.target.files.length > 0) {
-    //             let file = event.target.files[0];
-    //             reader.readAsDataURL(file);
-    //             reader.onload = () => {
-    //                 this.imageSrc = reader.result;
-    //             };
-    //         }
-    //     }
-    // }
+    getFileDefault() {
+        this.http.get(this.defaultSrcImg, { responseType: 'arraybuffer' }).subscribe(
+            (data) => {
+                this.defaultImgData = btoa(String.fromCharCode.apply(null, new Uint8Array(data)));
+            },
+            (error) => {
+                console.error('Error fetching file:', error);
+            }
+        );
+    }
 
+   
 }
