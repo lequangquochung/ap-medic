@@ -76,7 +76,7 @@ const NavigationItems = [
         id: 'employee',
         title: 'Nhân Viên',
         type: 'collapse',
-        icon: 'ti ti-key',
+        icon: 'ti ti-user',
         children: [
           {
             id: 'Danh sách nhân viên',
@@ -100,7 +100,7 @@ const NavigationItems = [
         id: 'news',
         title: 'Danh sách bài viết',
         type: 'collapse',
-        icon: 'ti ti-key',
+        icon: 'ti ti-book',
         children: [
           {
             id: 'listNews',
@@ -124,7 +124,7 @@ const NavigationItems = [
         id: 'labService',
         title: 'Dịch vụ',
         type: 'collapse',
-        icon: 'ti ti-key',
+        icon: 'ti ti-menu',
         children: [
           {
             id: 'labService',
@@ -144,14 +144,31 @@ const NavigationItems = [
           },
         ]
       },
-      // {
-      //   id: 'color',
-      //   title: 'Colors',
-      //   type: 'item',
-      //   classes: 'nav-item',
-      //   url: '/color',
-      //   icon: 'ti ti-brush'
-      // },
+      {
+        id: 'imgLab',
+        title: 'Thư viện ảnh',
+        type: 'collapse',
+        icon: 'ti ti-key',
+        children: [
+          {
+            id: 'imgLab',
+            title: 'Danh sách ảnh',
+            type: 'item',
+            url: '/app/photo/list-photo',
+            target: false,
+            breadcrumbs: false
+          },
+          {
+            id: 'createImgLab',
+            title: 'Thêm ảnh mới',
+            type: 'item',
+            url: '/app/photo/add-image',
+            target: false,
+            breadcrumbs: false
+          },
+        ]
+      },
+    
     ]
   },
 ];

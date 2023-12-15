@@ -1,0 +1,13 @@
+<p-toast></p-toast>
+<div class="row">
+    <div class="col-4">
+        <div class="upload-file-block">
+            <label for="formFile" class="form-label">Tải ảnh lên</label>
+            <input #myInputFile class="form-control" type="file" id="formFile" (change)="readURL($event)">
+            <img class="lab-photo mt-2" *ngIf="imageForm" id="blah" [src]="imageForm" width="150px" alt="your image" />
+        </div>
+    </div>
+    <div class="btn-action mt-4">
+        <button class="btn btn-primary" (click)="createImg()" [disabled]="!imageForm">Upload</button>
+    </div>
+</div>

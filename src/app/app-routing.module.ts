@@ -19,18 +19,6 @@ const routes: Routes = [
         path: 'dashboard',
         loadComponent: () => import('./demo/default/default.component'),
       },
-      // {
-      //   path: 'typography',
-      //   loadComponent: () => import('./demo/elements/typography/typography.component')
-      // },
-      {
-        path: 'color',
-        loadComponent: () => import('./demo/elements/element-color/element-color.component')
-      },
-      {
-        path: 'sample-page',
-        loadComponent: () => import('./demo/sample-page/sample-page.component')
-      },
       {
         path: 'employee',
         loadChildren: () => import('./demo/elements/employee/employee.module').then((m)=>m.EmployeeModule),
@@ -42,6 +30,10 @@ const routes: Routes = [
       {
         path:'lab-service',
         loadChildren: () => import('./demo/elements/lab-service/lab-service.module').then((m) => m.LabServiceModule)
+      },
+      {
+        path:'photo',
+        loadChildren: () => import('./demo/elements/img-lab/img-lab.module').then((m) => m.ImgLabModule)
       }
     ],
   },
