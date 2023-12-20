@@ -11,7 +11,6 @@ import { ImgLabService } from 'src/app/services/img-lab/img-lab.service';
 export class CreateImgComponent implements OnInit {
   @ViewChild('myInputFile')
   myInputVariable?: ElementRef;
-  // 
   fileData: any;
   imageForm: any;
 
@@ -22,18 +21,16 @@ export class CreateImgComponent implements OnInit {
   }
 
   createImg() {
-    console.log('imageForm', this.imageForm);
     const payload = {
       image: this.imageForm
-
     }
 
     this.imgLabService.create(payload).subscribe({
       next: (res) => {
         if (res.success) {
-          console.log(res);
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tạo bài viết thành công' });
           this.myInputVariable.nativeElement.value = "";
+          this.imageForm = "";
         }
       },
       error: () => {

@@ -59,12 +59,7 @@ export class EditEmployeeComponent implements OnInit {
         degree: this.dataForm.get('degree').value,
         avatar: this.imageForm
       }
-      console.log(payload);
-      
       this.editPayload(payload);
-
-    } else {
-      console.log('invalid');
     }
   }
 
@@ -75,7 +70,6 @@ export class EditEmployeeComponent implements OnInit {
       },
       error: (e) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
-        console.log(e);
       }
     })
   }

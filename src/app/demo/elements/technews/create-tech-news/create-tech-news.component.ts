@@ -77,7 +77,6 @@ export class CreateTechNewsComponent implements OnInit {
             content: this.contentForm.controls['content'].value,
             thumbnail: this.fileData ? this.fileData : this.defaultImgData
         }
-        console.log('payload', payload);
         
         if (this.contentForm.valid) {
             this.techNewsService.createContent(payload).subscribe({

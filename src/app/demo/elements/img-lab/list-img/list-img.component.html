@@ -1,33 +1,9 @@
+<p-toast></p-toast>
+<p-confirmPopup></p-confirmPopup>
 <div class="row img-list">
-  <!-- <div class="col d-flex flex-wrap">
+  <div class="col d-flex flex-wrap">
     <div class="" *ngFor="let item of data">
-      <img [src]="item.image" alt="..." class="img-thumbnail ms-2 galerry-item" width="200" style="height: 170px;">
+      <img [src]="item.image" alt="..." class="img-thumbnail ms-2 galerry-item" width="200" style="height: 170px;" (click)="clickToDelete(item?.id)">
     </div>
-  </div> -->
-
-</div>
-
-
-<!-- <div class="card">
-  <div *ngIf="data" class="grid" style="max-width: 800px;">
-      <div *ngFor="let image of data; let index = index" class="col-3" key="index">
-          <img [src]="image.thumbnailImageSrc" [alt]="image.alt" style="cursor: pointer" (click)="imageClick(index)" />
-      </div>
   </div>
-  <p-galleria
-      [(value)]="data"
-      [(visible)]="displayCustom"
-      [(activeIndex)]="activeIndex"
-      [responsiveOptions]="responsiveOptions"
-      [containerStyle]="{ 'max-width': '850px' }"
-      [numVisible]="7"
-      [circular]="true"
-      [fullScreen]="true"
-      [showItemNavigators]="true"
-      [showThumbnails]="false"
-  >
-      <ng-template pTemplate="item" let-item>
-          <img [src]="item.image" style="width: 100%; display: block;" />
-      </ng-template>
-  </p-galleria>
-</div> -->
+</div>

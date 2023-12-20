@@ -1,15 +1,31 @@
 <p-toast></p-toast>
 <p-confirmPopup></p-confirmPopup>
-<div class="service-details row">
+<div class="service-details row pb-5">
     <div class="col">
         <div [formGroup]="submitForm" class="mb-3">
-            <div class="">
+            <div class="mb-3">
+                <label class="me-3">Màu đại diện</label>
+                <input class="d-block" [style.background]="bgColor" [(colorPicker)]="bgColor" [cpOKButton]="true"
+                    [cpOKButtonText]="'Select'" [cpCancelButton]="true" [cpSaveClickOutside]="false"
+                    [cpDisableInput]="false" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'"
+                    [cpPresetColors]="presetValues" [cpAddColorButton]="true" (colorPickerSelect)="getColor($event)" />
+            </div>
+            
+            <div class="mb-3">
+                <label  class="form-label">Tiêu đề</label>
+                <input pInputText type="text" formControlName="title" class="mb-1 input-text d-block">
+            </div>
+
+            <div class="mb-3">
+                <label  class="form-label">Chỉ mục</label>
                 <div class="" [formGroup]="formItem" *ngFor="let formItem of formArrays; let i = index">
                     <input pInputText type="text" formControlName="content" class="mb-1 input-text">
                     <button class="btn btn-danger ms-3" (click)="deleteItem(i)">Xoá</button>
                 </div>
             </div>
         </div>
+
+
         <div class="form-footer">
             <button (click)="addService()" class="btn btn-primary">Thêm</button>
             <button (click)="saveItems()" class="btn btn-success ms-3">Cập nhật</button>

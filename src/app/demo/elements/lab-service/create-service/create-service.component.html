@@ -1,13 +1,20 @@
 <p-toast></p-toast>
 <div class="block-create-content row">
-    <!-- <form class="form-group" [formGroup]="labServicetForm" (ngSubmit)="submitForm()"> -->
+    <div class="form-group">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Tiêu đề</label>
-            <input type="text" class="form-control" placeholder="Tiêu đề" [(ngModel)]="titlePayload" >
-            <input type="hidden" [(ngModel)]="orderTitle"/>
+            <input type="text" class="form-control" placeholder="Tiêu đề" [(ngModel)]="titlePayload"
+                [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="mb-3">
+            <label class="me-3">Màu đại diện</label>
+            <input [style.background]="colorList[0].value" [(colorPicker)]="colorList[0].value" [(ngModel)]="selected"
+                [cpOKButton]="true" [cpOKButtonText]="'Select'" [cpCancelButton]="true" [cpSaveClickOutside]="false"
+                [cpDisableInput]="false" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'"
+                [cpPresetColors]="presetValues" [cpAddColorButton]="true" (colorPickerSelect)="getColor($event)" />
         </div>
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary" (click)="submitForm()"> Tạo Mới</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!titlePayload" (click)="submitForm()"> Tạo Mới</button>
         </div>
-    <!-- </form> -->
+    </div>
 </div>

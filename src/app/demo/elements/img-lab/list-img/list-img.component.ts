@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ImgLabService } from 'src/app/services/img-lab/img-lab.service';
 
 @Component({
   selector: 'app-list-img',
   templateUrl: './list-img.component.html',
-  styleUrls: ['list-img.component.scss']
+  styleUrls: ['list-img.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class ListImgComponent implements OnInit {
 
@@ -33,6 +35,8 @@ export class ListImgComponent implements OnInit {
     }
   ];
   constructor(private imgLabService: ImgLabService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private _sanitizer: DomSanitizer) { }
   ngOnInit(): void {
     this.getAllPhoto();
@@ -46,7 +50,6 @@ export class ListImgComponent implements OnInit {
             item.image = this.convertToImg(item.image);
             return item;
           });
-          console.log(this.data);
         }
       }
     })
@@ -62,4 +65,26 @@ export class ListImgComponent implements OnInit {
     this.displayCustom = true;
   }
 
+  clickToDelete(id: string) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Xoá ảnh này ?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.imgLabService.delete(id).subscribe({
+          next:(res) => {
+            if(res.success) {
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Xoá thành công' });
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
+            }
+            this.getAllPhoto();
+          }, 
+          error:() => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
+          }
+        })
+      }
+    });
+  }
 }

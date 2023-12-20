@@ -19,12 +19,28 @@ export class EditServiceComponent implements OnInit {
     submitForm = this.fb.group({
         title: [''],
         order: [''],
+        bgColor: ['']
     });
     lastIndex = 0;
     formArrays = [];
     isValidFormArray: boolean = false;
+    presetValues: string[] = [];
 
-    // items: FormArray = new FormArray([]);
+    bgColor?: string;
+    public colorList = [
+        { key: "flame", value: "#e45a33", friendlyName: "Flame" },
+        { key: "orange", value: "#fa761e", friendlyName: "Orange" },
+        { key: "infrared", value: "#ef486e", friendlyName: "Infrared" },
+        { key: "male", value: "#4488ff", friendlyName: "Male Color" },
+        { key: "female", value: "#ff44aa", friendlyName: "Female Color" },
+        { key: "paleyellow", value: "#ffd165", friendlyName: "Pale Yellow" },
+        { key: "gargoylegas", value: "#fde84e", friendlyName: "Gargoyle Gas" },
+        { key: "androidgreen", value: "#9ac53e", friendlyName: "Android Green" },
+        { key: "carribeangreen", value: "#05d59e", friendlyName: "Carribean Green" },
+        { key: "bluejeans", value: "#5bbfea", friendlyName: "Blue Jeans" },
+        { key: "cyancornflower", value: "#1089b1", friendlyName: "Cyan Cornflower" },
+        { key: "warmblack", value: "#06394a", friendlyName: "Warm Black" },
+    ];
 
     constructor(private route: ActivatedRoute,
         private messageService: MessageService,
@@ -35,19 +51,27 @@ export class EditServiceComponent implements OnInit {
             const serviceId = params.get('serviceId');
             this.serviceId = serviceId;
         });
-        // this.details = this.submitForm.get('details') as FormArray;
+        this.presetValues = this.getColorValues();
     }
     ngOnInit(): void {
         this.getListServiceDetail(this.serviceId);
+    }
+
+    getColor(event: any) {
+        this.submitForm.get('bgColor').setValue(event);
+    }
+
+    getColorValues() {
+        return this.colorList.map(c => c.value);
     }
 
     getListServiceDetail(id: string) {
         this.labService.getListServiceDetail(id).subscribe({
             next: (res: any) => {
                 this.detailData = res.data;
+                this.bgColor = this.detailData.bgColor;
                 this.submitForm.patchValue(this.detailData)
                 this.lastIndex = this.detailData.details.length;
-                console.log('lastIndex', this.lastIndex);
 
                 this.detailData.details.forEach(element => {
                     this.formArrays.push(this.fb.group({
@@ -106,13 +130,12 @@ export class EditServiceComponent implements OnInit {
     }
 
     saveItems() {
-        let checkValid = true;
         this.confirmationService.confirm({
             target: event.target as EventTarget,
             message: 'Cập nhật dịch vụ ?',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                const valueData:any = {
+                const valueData: any = {
                     ...this.submitForm.getRawValue(),
                     details: this.formArrays.map(i => {
                         if (!i.getRawValue().content) {
@@ -122,10 +145,10 @@ export class EditServiceComponent implements OnInit {
                         }
                     })
                 }
-                
+
                 let x = Object.values(valueData)[Object.values(valueData).length - 1] as any;
                 const checkValid = x.some(element => element === false);
-                
+
                 if (!checkValid) {
                     this.onSubmit(valueData);
                 } else {

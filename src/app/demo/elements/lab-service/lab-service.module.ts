@@ -8,6 +8,8 @@ import { EditServiceComponent } from './edit-service/edit-service.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+// import { ColorPickerModule } from 'primeng/colorpicker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 const routes: Routes = [
   {
@@ -42,7 +44,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     InputTextModule,
     ToastModule,
-    ConfirmPopupModule 
+    ConfirmPopupModule ,
+    ColorPickerModule,
+
   ],
   exports: [RouterModule],
 })

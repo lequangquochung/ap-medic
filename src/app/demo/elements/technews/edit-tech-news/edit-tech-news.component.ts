@@ -80,31 +80,9 @@ export class EditTechNewsComponent implements OnInit {
                 title: this.contentForm.get('title').value,
                 subContent: this.contentForm.get('subContent').value,
                 content: this.contentForm.get('content').value,
-                thumbnail:this.contentForm.get('thumbnail').value,
+                thumbnail:this.imageForm,
             }
             this.editPayload(payload);
-            
-            // if (this.imgPayload) {
-            //     this.employeeService.uploadAvatar(this.imgPayload[0]).subscribe({
-            //         next: (res) => {
-            //             this.imageSrc = this.baseDomain + res.data;
-            //             this.imgPayload = res.data;
-            //             this.editPayload(payload);
-            //         },
-            //         error(e: Error) {
-            //             console.log('error', e);
-            //             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
-            //         }
-            //     });
-            // } else {
-            //     const payload = {
-            //         title: this.contentForm.get('title').value,
-            //         subContent: this.contentForm.get('subContent').value,
-            //         content: this.contentForm.get('content').value,
-            //         thumbnail:  this.contentForm.get('thumbnail').value,
-            //     }
-            //     
-            // }
         }
     }
 
@@ -126,7 +104,7 @@ export class EditTechNewsComponent implements OnInit {
                 this.contentForm.patchValue(res.data);
                 this.imageForm =res.data.thumbnail;
                 this.fileData = this.convertToImg(res.data.thumbnail);
-            }
+            }   
         })
     }
 

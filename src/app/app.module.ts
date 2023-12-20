@@ -24,6 +24,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { AuthInterceptor } from './interceptor/interceptor';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -31,6 +31,10 @@ export class LabService {
     return this.httpClient.put<any>(this.baseUrl + `cms/lab-service/${id}`, payload);
   }
 
+  delete(id: string): Observable<IResponseData<any>> {
+    return this.httpClient.delete<any>(this.baseUrl + `cms/lab-service/${id}`);
+  }
+
  
 }
   

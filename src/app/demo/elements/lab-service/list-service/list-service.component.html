@@ -1,5 +1,8 @@
+<p-toast></p-toast>
+<p-confirmPopup></p-confirmPopup>
 <div *ngFor="let parrent of data">
-    <div class="item-list">
+    <div class="item-list d-flex justify-content-between">
         <button class="btn " (click)="onEdit(parrent.id)">{{parrent?.title}}</button>
+        <button class="btn delete-btn" (click)="onDelete(parrent.id)">Xoá</button>
     </div>
 </div>

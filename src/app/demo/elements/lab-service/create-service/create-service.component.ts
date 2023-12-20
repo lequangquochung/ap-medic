@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ColorPickerService } from 'ngx-color-picker';
 import { MessageService } from 'primeng/api';
 import { LabService } from 'src/app/services/lab-service/lab-service.service';
 
@@ -11,30 +12,68 @@ import { LabService } from 'src/app/services/lab-service/lab-service.service';
 })
 export class CreateServiceComponent implements OnInit {
 
-  labServicetForm: FormGroup;
   imgPayload: any;
   imageSrc: any;
   titlePayload: string;
   serviceIndex: number;
   orderTitle: number;
+  selected?: string;
+  presetValues: string[] = [];
 
-  constructor(private fb: FormBuilder,
+  public colorList = [
+    { key: "flame", value: "#e45a33", friendlyName: "Flame" },
+    { key: "orange", value: "#fa761e", friendlyName: "Orange" },
+    { key: "infrared", value: "#ef486e", friendlyName: "Infrared" },
+    { key: "male", value: "#4488ff", friendlyName: "Male Color" },
+    { key: "female", value: "#ff44aa", friendlyName: "Female Color" },
+    { key: "paleyellow", value: "#ffd165", friendlyName: "Pale Yellow" },
+    { key: "gargoylegas", value: "#fde84e", friendlyName: "Gargoyle Gas" },
+    { key: "androidgreen", value: "#9ac53e", friendlyName: "Android Green" },
+    { key: "carribeangreen", value: "#05d59e", friendlyName: "Carribean Green" },
+    { key: "bluejeans", value: "#5bbfea", friendlyName: "Blue Jeans" },
+    { key: "cyancornflower", value: "#1089b1", friendlyName: "Cyan Cornflower" },
+    { key: "warmblack", value: "#06394a", friendlyName: "Warm Black" },
+  ];
+
+
+  constructor(
+    private messageService: MessageService,
     private labService: LabService) {
-
+    this.presetValues = this.getColorValues();
   }
 
   ngOnInit(): void {
     this.getLabServices();
   }
 
+  getColor(event: any) {
+    this.selected = event;
+  }
+
+  getColorValues() {
+    return this.colorList.map(c => c.value);
+  }
+
+
   submitForm() {
     const payload = {
       title: this.titlePayload,
       order: this.serviceIndex,
+      bgColor: this.selected
     }
+
     this.labService.createMainService(payload).subscribe({
-      next:(res) =>{
+      next: (res) => {
         this.getLabServices();
+        if (res.success) {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tạo thành công' });
+          this.titlePayload = "";
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
+        }
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Không thành công' });
       }
     })
   }

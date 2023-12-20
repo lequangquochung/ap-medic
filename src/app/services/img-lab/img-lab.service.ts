@@ -8,7 +8,7 @@ import { environment } from "src/environments/environment";
 @Injectable({
     providedIn: 'root'
 })
-export class ImgLabService {
+export class    ImgLabService {
     constructor(private httpClient: HttpClient) {
     }
     private baseUrl = `${environment.apiUrl}`
@@ -20,5 +20,9 @@ export class ImgLabService {
 
     getAll(): Observable<IResponseData<any>> {
         return this.httpClient.get<any>(this.baseUrl + 'cms/lab-image');
+    }
+
+    delete(id: string):Observable<IResponseData<any>> {
+        return this.httpClient.delete<any>(`${this.baseUrl}cms/lab-image/${id}`);
     }
 }
