@@ -79,8 +79,8 @@ const NavigationItems = [
         icon: 'ti ti-user',
         children: [
           {
-            id: 'Danh sách nhân viên',
-            title: 'List Employee',
+            id: 'listEmployee ',
+            title: 'Danh sách nhân viên',
             type: 'item',
             url: '/app/employee/list-employee',
             target: false,
@@ -88,7 +88,7 @@ const NavigationItems = [
           },
           {
             id: 'createEmployee',
-            title: 'Create Employee',
+            title: 'Tạo nhân viên mới',
             type: 'item',
             url: '/app/employee/create-employee',
             target: false,
@@ -112,7 +112,7 @@ const NavigationItems = [
           },
           {
             id: 'createNews',
-            title: 'Create News',
+            title: 'Tạo bài viết mới',
             type: 'item',
             url: '/app/news/create-news',
             target: false,
