@@ -39,7 +39,7 @@ export class AdminService {
 
 
     public signIn(payload: ILoginRequest): Observable<IResponseData<any>> {
-        return this.httpClient.post<any>(this.baseUrl + 'cms/auth/login', payload).pipe(
+        return this.httpClient.post<any>('https://ap-lab-be-production.up.railway.app/cms/auth/login', payload).pipe(
             map((result: IResponseData<any>) => {
                 if (result.success) {
                     localStorage.setItem(EStorageKey.AccessToken, result.data.accessToken);

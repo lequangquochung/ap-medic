@@ -14,8 +14,12 @@ export class    ImgLabService {
     private baseUrl = `${environment.apiUrl}`
 
     // create(payload: any)
-    create(payload: any): Observable<IResponseData<any>> {
+    uploadForLab(payload: any): Observable<IResponseData<any>> {
         return this.httpClient.post<any>(this.baseUrl + 'cms/lab-image', payload);
+    }
+
+    uploadForLandingPage(payload: any): Observable<IResponseData<any>> {
+        return this.httpClient.post<any>(this.baseUrl + 'cms/lab-image/dashboard/background', payload);
     }
 
     getAll(): Observable<IResponseData<any>> {

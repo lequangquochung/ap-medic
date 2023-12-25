@@ -7,6 +7,7 @@ import { ConfirmPopupModule } from "primeng/confirmpopup";
 import { NgModule } from "@angular/core";
 import { ListImgComponent } from "./list-img/list-img.component";
 import { GalleriaModule } from 'primeng/galleria';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 const routes: Routes = [
     {
@@ -38,7 +39,8 @@ const routes: Routes = [
       RouterModule.forChild(routes),
       ToastModule,
       ConfirmPopupModule ,
-      GalleriaModule
+      GalleriaModule,
+      RadioButtonModule
     ],
     exports: [RouterModule],
   })
