@@ -5,7 +5,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://ap-lab-be-production.up.railway.app/'
+  // apiUrl: 'https://ap-lab-be-production.up.railway.app/',
+  apiUrl: 'https://pgdteam.tech/'
 };
 
 /*
